@@ -174,18 +174,20 @@ func NumTokensFromMessages(messages []openai.ChatCompletionMessage, model string
 
 
 # Available Encodings
- | Encoding name           | OpenAI models                                        |
- | ----------------------- | ---------------------------------------------------- |
- | `o200k_base`            | `gpt-4o`                                             |
- | `cl100k_base`           | `gpt-4`, `gpt-3.5-turbo`, `text-embedding-ada-002`, `text-embedding-3-small`, `text-embedding-3-large`   |
- | `p50k_base`             | Codex models, `text-davinci-002`, `text-davinci-003` |
- | `r50k_base` (or `gpt2`) | GPT-3 models like `davinci`                          |
+ | Encoding name           | OpenAI models                                                                                          |
+ | ----------------------- |--------------------------------------------------------------------------------------------------------|
+ | `o200k_base`            | `gpt-4o`, `gpt-4.1`, `gpt-4.5`                                                                         |
+ | `cl100k_base`           | `gpt-4`, `gpt-3.5-turbo`, `text-embedding-ada-002`, `text-embedding-3-small`, `text-embedding-3-large` |
+ | `p50k_base`             | Codex models, `text-davinci-002`, `text-davinci-003`                                                   |
+ | `r50k_base` (or `gpt2`) | GPT-3 models like `davinci`                                                                            |
 
 
 
 # Available Models
 | Model name                   | OpenAI models |
-| ---------------------------- | ------------- |
+|------------------------------| ------------- |
+| gpt-4.5-*                    | o200k_base    |
+| gpt-4.1-*                    | o200k_base    |
 | gpt-4o-*                     | o200k_base    |
 | gpt-4-*                      | cl100k_base   |
 | gpt-3.5-turbo-*              | cl100k_base   |
