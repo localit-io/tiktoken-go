@@ -187,7 +187,7 @@ func NumTokensFromMessages(messages []openai.ChatCompletionMessage, model string
 # Available Encodings
 
 | Encoding name           | OpenAI models                                                                                          |
- |-------------------------|--------------------------------------------------------------------------------------------------------|
+|-------------------------|--------------------------------------------------------------------------------------------------------|
 | `o200k_base`            | `gpt-4o`, `gpt-4.1`, `gpt-4.5`                                                                         |
 | `cl100k_base`           | `gpt-4`, `gpt-3.5-turbo`, `text-embedding-ada-002`, `text-embedding-3-small`, `text-embedding-3-large` |
 | `p50k_base`             | Codex models, `text-davinci-002`, `text-davinci-003`                                                   |
