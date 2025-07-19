@@ -37,22 +37,20 @@ func readFile(blobpath string) ([]byte, error) {
 }
 
 func readFileCached(blobpath string) ([]byte, error) {
-	var cacheDir string
-	if os.Getenv("TIKTOKEN_CACHE_DIR") != "" {
-		cacheDir = os.Getenv("TIKTOKEN_CACHE_DIR")
-	} else if os.Getenv("DATA_GYM_CACHE_DIR") != "" {
-		cacheDir = os.Getenv("DATA_GYM_CACHE_DIR")
-	} else {
-		cacheDir = filepath.Join(os.TempDir(), "data-gym-cache")
+	if blobpath == "" {
+		return nil, fmt.Errorf("blobpath cannot be empty")
+	}
+
+	cacheDir := strings.TrimSpace(os.Getenv("TIKTOKEN_CACHE_DIR"))
+	if cacheDir == "" {
+		cacheDir = strings.TrimSpace(os.Getenv("DATA_GYM_CACHE_DIR"))
 	}
 
 	if cacheDir == "" {
-		// disable caching
-		return readFile(blobpath)
+		cacheDir = filepath.Join(os.TempDir(), "data-gym-cache")
 	}
 
 	cacheKey := fmt.Sprintf("%x", sha1.Sum([]byte(blobpath)))
-
 	cachePath := filepath.Join(cacheDir, cacheKey)
 	if _, err := os.Stat(cachePath); err == nil {
 		return os.ReadFile(cachePath)
@@ -67,11 +65,17 @@ func readFileCached(blobpath string) ([]byte, error) {
 		return nil, fmt.Errorf("failed to create cache directory: %w", err)
 	}
 
-	tmpFilename := cachePath + "." + uuid.New().String() + ".tmp"
-	if err := os.WriteFile(tmpFilename, contents, os.ModePerm); err != nil {
-		return nil, err
+	tmpFilename := fmt.Sprintf("%s.%s.tmp", cachePath, uuid.NewString())
+	if err := os.WriteFile(tmpFilename, contents, 0644); err != nil {
+		return nil, fmt.Errorf("failed to write temporary file: %w", err)
 	}
-	return contents, os.Rename(tmpFilename, cachePath)
+
+	if err := os.Rename(tmpFilename, cachePath); err != nil {
+		os.Remove(tmpFilename) // Clean up on failure
+		return nil, fmt.Errorf("failed to rename temporary file: %w", err)
+	}
+
+	return contents, nil
 }
 
 func loadTiktokenBpe(tiktokenBpeFile string) (map[string]int, error) {
