@@ -4,7 +4,7 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -25,7 +25,7 @@ func readFile(blobpath string) ([]byte, error) {
 			return nil, err
 		}
 		defer file.Close()
-		return ioutil.ReadAll(file)
+		return io.ReadAll(file)
 	}
 	// avoiding blobfile for public files helps avoid auth issues, like MFA prompts
 	resp, err := http.Get(blobpath)
@@ -33,7 +33,7 @@ func readFile(blobpath string) ([]byte, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	return ioutil.ReadAll(resp.Body)
+	return io.ReadAll(resp.Body)
 }
 
 func readFileCached(blobpath string) ([]byte, error) {
@@ -55,7 +55,7 @@ func readFileCached(blobpath string) ([]byte, error) {
 
 	cachePath := filepath.Join(cacheDir, cacheKey)
 	if _, err := os.Stat(cachePath); err == nil {
-		return ioutil.ReadFile(cachePath)
+		return os.ReadFile(cachePath)
 	}
 
 	contents, err := readFile(blobpath)
@@ -63,9 +63,12 @@ func readFileCached(blobpath string) ([]byte, error) {
 		return nil, err
 	}
 
-	os.MkdirAll(cacheDir, os.ModePerm)
+	if err := os.MkdirAll(cacheDir, os.ModePerm); err != nil {
+		return nil, fmt.Errorf("failed to create cache directory: %w", err)
+	}
+
 	tmpFilename := cachePath + "." + uuid.New().String() + ".tmp"
-	if err := ioutil.WriteFile(tmpFilename, contents, os.ModePerm); err != nil {
+	if err := os.WriteFile(tmpFilename, contents, os.ModePerm); err != nil {
 		return nil, err
 	}
 	return contents, os.Rename(tmpFilename, cachePath)
