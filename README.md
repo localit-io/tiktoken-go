@@ -1,3 +1,14 @@
+## Maintained Version by Localit
+
+This is an independent fork of [pkoukk/tiktoken-go](https://github.com/pkoukk/tiktoken-go), maintained by the Localit
+team.  
+Due to the original repository being inactive for a long period, we have created a fork here. This version includes
+updates tailored for the latest versions of `gpt-4o` and the `o200k` encoder.  
+We also opened [an issue](https://github.com/pkoukk/tiktoken-go/issues/60) to ask about the project's future before
+proceeding.
+Our goal is to support all the latest models and encodings. We also aim to improve code quality and follow Go best
+practices and standards.
+
 # tiktoken-go
 
 [简体中文](./README_zh-hans.md)
@@ -13,7 +24,7 @@ This is a port of the original [tiktoken](https://github.com/openai/tiktoken).
 ## Install
 
 ```bash
-go get github.com/pkoukk/tiktoken-go
+go get github.com/localit-io/tiktoken-go
 ```
 
 ## Cache
@@ -53,7 +64,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkoukk/tiktoken-go"
+	"github.com/localit-io/tiktoken-go"
 )
 
 func main() {
@@ -85,7 +96,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkoukk/tiktoken-go"
+	"github.com/localit-io/tiktoken-go"
 )
 
 func main() {
@@ -129,7 +140,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/pkoukk/tiktoken-go"
+	"github.com/localit-io/tiktoken-go"
 	"github.com/sashabaranov/go-openai"
 )
 
