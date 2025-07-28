@@ -3,7 +3,7 @@
 This is an independent fork of [pkoukk/tiktoken-go](https://github.com/pkoukk/tiktoken-go), maintained by the Localit
 team.  
 Due to the original repository being inactive for a long period, we have created a fork here. This version includes
-updates tailored for the latest versions of `gpt-4o` and the `o200k` encoder.  
+updates tailored for the latest versions of models and encoder.  
 We also opened [an issue](https://github.com/pkoukk/tiktoken-go/issues/60) to ask about the project's future before
 proceeding.
 Our goal is to support all the latest models and encodings. We also aim to improve code quality and follow Go best
