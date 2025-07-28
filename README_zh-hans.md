@@ -8,7 +8,7 @@ tiktoken的原项目地址[tiktoken](https://github.com/openai/tiktoken).
 ## 安装
 
 ```bash
-go get github.com/pkoukk/tiktoken-go
+go get github.com/localit-io/tiktoken-go
 ```
 ## 缓存
 Tiktoken-go 和原始的 Tiktoken 库一样，具有相同的缓存机制。  
@@ -32,7 +32,7 @@ Tiktoken-go 和原始的 Tiktoken 库一样，具有相同的缓存机制。
 
 由于 BPE 字典的文件较大，不适合包含在本项目中，故此加载器在其他项目中。
 
-如果需要使用，请引用：[tiktoken_loader](https://github.com/pkoukk/tiktoken-go-loader)
+如果需要使用，请引用：[tiktoken_loader](https://github.com/localit-io/tiktoken-go-loader)
 
 ## 例子
 
@@ -43,7 +43,7 @@ package main
 
 import (
     "fmt"
-    "github.com/pkoukk/tiktoken-go"
+    "github.com/localit-io/tiktoken-go"
 )
 
 func main()  {
@@ -75,7 +75,7 @@ package main
 
 import (
     "fmt"
-    "github.com/pkoukk/tiktoken-go"
+    "github.com/localit-io/tiktoken-go"
 )
 
 func main()  {
@@ -113,7 +113,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/pkoukk/tiktoken-go"
+	"github.com/localit-io/tiktoken-go"
 	"github.com/sashabaranov/go-openai"
 )
 
