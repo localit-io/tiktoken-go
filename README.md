@@ -1,5 +1,9 @@
 ## Maintained version by Localit
 
+[![CI](https://github.com/localit-io/tiktoken-go/actions/workflows/go.yml/badge.svg)](https://github.com/localit-io/tiktoken-go/actions/workflows/go.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/localit-io/tiktoken-go.svg)](https://pkg.go.dev/github.com/localit-io/tiktoken-go)
+[![License](https://img.shields.io/github/license/localit-io/tiktoken-go)](LICENSE)
+
 This is an independent fork of [pkoukk/tiktoken-go](https://github.com/pkoukk/tiktoken-go), maintained by the Localit
 team.
 
@@ -13,10 +17,6 @@ Our goal is to keep this library up to date. We also aim to improve code quality
 standards, implement linters, and add better tests and statistics.
 
 # tiktoken-go
-
-[![CI](https://github.com/localit-io/tiktoken-go/actions/workflows/go.yml/badge.svg)](https://github.com/localit-io/tiktoken-go/actions/workflows/go.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/localit-io/tiktoken-go.svg)](https://pkg.go.dev/github.com/localit-io/tiktoken-go)
-[![License](https://img.shields.io/github/license/localit-io/tiktoken-go)](LICENSE)
 
 [简体中文](./README_zh-hans.md)
 
