@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pkoukk/tiktoken-go"
+	"github.com/localit-io/tiktoken-go"
 )
 
-// go test -benchmem -run=^$ -bench ^BenchmarkEncodingInFullLanguage$ -benchtime=100000x github.com/pkoukk/tiktoken-go/test
+// go test -benchmem -run=^$ -bench ^BenchmarkEncodingInFullLanguage$ -benchtime=100000x github.com/localit-io/tiktoken-go/test
 
 func BenchmarkEncodingInFullLanguage(b *testing.B) {
 	data, err := os.ReadFile("/tmp/udhr.txt")
