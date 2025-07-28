@@ -1,13 +1,16 @@
-## Maintained Version by Localit
+## Maintained version by Localit
 
 This is an independent fork of [pkoukk/tiktoken-go](https://github.com/pkoukk/tiktoken-go), maintained by the Localit
-team.  
-Due to the original repository being inactive for a long period, we have created a fork here. This version includes
-updates tailored for the latest versions of models and encoder.  
-We also opened [an issue](https://github.com/pkoukk/tiktoken-go/issues/60) to ask about the project's future before
+team.
+
+Due to the original repository being inactive for an extended period, we have created this fork. This version includes
+updates tailored for the latest versions of models and encoders.
+
+We also opened [an issue](https://github.com/pkoukk/tiktoken-go/issues/60) to inquire about the project's future before
 proceeding.
-Our goal is to support all the latest models and encodings. We also aim to improve code quality and follow Go best
-practices and standards.
+
+Our goal is to keep this library up to date. We also aim to improve code quality and follow Go best practices and
+standards, implement linters, and add better tests and statistics.
 
 # tiktoken-go
 
