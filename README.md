@@ -299,6 +299,12 @@ following benchmark.
 | tiktoken-go | cl100k_base | 94502 ns  | Ubuntu 22.04 | AMD Ryzen 9 5900HS | [UDHR](http://research.ics.aalto.fi/cog/data/udhr/) | 100000 |
 | tiktoken    | cl100k_base | 54642 ns  | Ubuntu 22.04 | AMD Ryzen 9 5900HS | [UDHR](http://research.ics.aalto.fi/cog/data/udhr/) | 100000 |
 
+# Contributing
+
+Contributions are always welcome!  We appreciate bug reports, feature requests, improvements, and any other help that makes this library better.
+
+For details on how to get started, check out our [contributing guide](CONTRIBUTING.md).
+
 # License
 
 [MIT](./LICENSE)
