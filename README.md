@@ -303,7 +303,7 @@ following benchmark.
 
 Contributions are always welcome!  We appreciate bug reports, feature requests, improvements, and any other help that makes this library better.
 
-For details on how to get started, check out our [contributing guide](/CONTRIBUTING.md).
+For details on how to get started, check out our [contributing guide](CONTRIBUTING.md).
 
 # License
 
