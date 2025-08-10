@@ -34,7 +34,6 @@ func TestEncoding(t *testing.T) {
 
 func TestDecoding(t *testing.T) {
 	ass := assert.New(t)
-	// enc, err := GetEncoding("cl100k_base")
 	enc, err := GetEncoding(MODEL_CL100K_BASE)
 	ass.Nil(err, "Encoding  init should not be nil")
 	sourceTokens := []int{15339, 1917, 0, 57668, 53901, 3922, 3574, 244, 98220, 6447}
@@ -65,19 +64,18 @@ func TestEncodingForModel_Prefixes(t *testing.T) {
 }
 
 func testEncodingForModel(t *testing.T, model string) {
-	text := "hello world"
+	t.Helper()
 
+	text := "hello world"
 	ass := assert.New(t)
 	req := require.New(t)
 
-	t.Helper()
 	tkm, err := EncodingForModel(model)
 	req.NoErrorf(err, "error getting encoding for model %q: %v", model, err)
 	ass.NotNil(tkm, "Encoding for model %s should not be nil", model)
 
 	encText := tkm.Encode(text, nil, nil)
-	//t.Logf("Encoding for model %s: %v", model, encText)
-	ass.Len(encText, 2, "Encoding should be equal")
+	ass.Len(encText, 2, "Encoding len should be equal")
 
 	decText := tkm.Decode(encText)
 	ass.Equal(text, decText, "decoding mismatch - want: %s, got: %s", text, decText)
