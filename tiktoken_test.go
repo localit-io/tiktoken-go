@@ -1,8 +1,13 @@
 package tiktoken
 
 import (
-	"github.com/stretchr/testify/require"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -32,6 +37,46 @@ func TestEncoding(t *testing.T) {
 	})
 }
 
+type urlRewriteLoader struct {
+	realBase string
+	fakeBase string
+	inner    BpeLoader
+}
+
+func (u *urlRewriteLoader) LoadTiktokenBpe(url string) (map[string]int, error) {
+	url = strings.Replace(url, u.realBase, u.fakeBase, 1)
+	return u.inner.LoadTiktokenBpe(url)
+}
+
+func TestGetEncoding_ErrorResponseNotCached(t *testing.T) {
+	cacheDir := t.TempDir()
+	t.Setenv("TIKTOKEN_CACHE_DIR", cacheDir)
+
+	ass := assert.New(t)
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "internal server error", http.StatusNotFound)
+	}))
+	t.Cleanup(func() {
+		ts.Close()
+		SetBpeLoader(NewDefaultBpeLoader())
+	})
+
+	loader := &urlRewriteLoader{
+		realBase: "https://openaipublic.blob.core.windows.net",
+		fakeBase: ts.URL,
+		inner:    NewDefaultBpeLoader(),
+	}
+	SetBpeLoader(loader)
+
+	got, err := GetEncoding(MODEL_O200K_BASE)
+	ass.Nil(got)
+	ass.Error(err, "expected error when fetching encoding with bad response")
+
+	entries, err := os.ReadDir(cacheDir)
+	ass.NoError(err)
+	ass.Empty(entries, "expected empty cache dir after error")
+}
+
 func TestDecoding(t *testing.T) {
 	ass := assert.New(t)
 	enc, err := GetEncoding(MODEL_CL100K_BASE)
@@ -48,7 +93,6 @@ func TestEncodingForModel_Names(t *testing.T) {
 			continue
 		}
 		t.Run("Check model "+model, func(t *testing.T) {
-			t.Parallel()
 			testEncodingForModel(t, model)
 		})
 	}
@@ -57,7 +101,6 @@ func TestEncodingForModel_Names(t *testing.T) {
 func TestEncodingForModel_Prefixes(t *testing.T) {
 	for prefix := range MODEL_PREFIX_TO_ENCODING {
 		t.Run("Check prefix "+prefix, func(t *testing.T) {
-			t.Parallel()
 			testEncodingForModel(t, prefix)
 		})
 	}
