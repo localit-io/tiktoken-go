@@ -56,6 +56,10 @@ func TestGetEncoding_ErrorResponseNotCached(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "internal server error", http.StatusNotFound)
 	}))
+	t.Cleanup(func() {
+		ts.Close()
+		SetBpeLoader(NewDefaultBpeLoader())
+	})
 
 	loader := &urlRewriteLoader{
 		realBase: "https://openaipublic.blob.core.windows.net",
@@ -64,16 +68,12 @@ func TestGetEncoding_ErrorResponseNotCached(t *testing.T) {
 	}
 	SetBpeLoader(loader)
 
-	t.Cleanup(func() {
-		SetBpeLoader(NewDefaultBpeLoader())
-	})
-
 	got, err := GetEncoding(MODEL_O200K_BASE)
 	ass.Nil(got)
 	ass.Error(err, "expected error when fetching encoding with bad response")
 
-	// This fails right now: bad response body is cached despite the error
-	entries, _ := os.ReadDir(cacheDir)
+	entries, err := os.ReadDir(cacheDir)
+	ass.NoError(err)
 	ass.Empty(entries, "expected empty cache dir after error")
 }
 
@@ -93,7 +93,6 @@ func TestEncodingForModel_Names(t *testing.T) {
 			continue
 		}
 		t.Run("Check model "+model, func(t *testing.T) {
-			t.Parallel()
 			testEncodingForModel(t, model)
 		})
 	}
@@ -102,7 +101,6 @@ func TestEncodingForModel_Names(t *testing.T) {
 func TestEncodingForModel_Prefixes(t *testing.T) {
 	for prefix := range MODEL_PREFIX_TO_ENCODING {
 		t.Run("Check prefix "+prefix, func(t *testing.T) {
-			t.Parallel()
 			testEncodingForModel(t, prefix)
 		})
 	}
