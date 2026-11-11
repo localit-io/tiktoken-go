@@ -22,6 +22,6 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: anthropics/claude-code-action@v1.1.4
+      - uses: anthropics/claude-code-action@v1.0.271
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
