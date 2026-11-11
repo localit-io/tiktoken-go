@@ -116,9 +116,12 @@ func TestEncodingForModel_GPT5Prefix(t *testing.T) {
 	}
 	for _, model := range models {
 		t.Run("Check model "+model, func(t *testing.T) {
+			ass := assert.New(t)
+			req := require.New(t)
+
 			tkm, err := EncodingForModel(model)
-			require.NoError(t, err)
-			assert.Equal(t, MODEL_O200K_BASE, tkm.pbeEncoding.Name)
+			req.NoError(err)
+			ass.Equal(MODEL_O200K_BASE, tkm.pbeEncoding.Name)
 		})
 	}
 }
