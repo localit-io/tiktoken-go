@@ -106,6 +106,33 @@ func TestEncodingForModel_Prefixes(t *testing.T) {
 	}
 }
 
+func TestEncodingForModel_GPT5Prefix(t *testing.T) {
+	models := []string{
+		"gpt-5.1",
+		"gpt-5.1-codex",
+		"gpt-5.2",
+		"gpt-5-mini",
+		"gpt-5-nano-2025-08-07",
+	}
+	for _, model := range models {
+		t.Run("Check model "+model, func(t *testing.T) {
+			ass := assert.New(t)
+			req := require.New(t)
+
+			tkm, err := EncodingForModel(model)
+			req.NoError(err)
+			ass.Equal(MODEL_O200K_BASE, tkm.pbeEncoding.Name)
+		})
+	}
+}
+
+func TestEncodingForModel_Unknown(t *testing.T) {
+	ass := assert.New(t)
+	got, err := EncodingForModel("gpt-x")
+	ass.Error(err)
+	ass.Nil(got)
+}
+
 func testEncodingForModel(t *testing.T, model string) {
 	t.Helper()
 
